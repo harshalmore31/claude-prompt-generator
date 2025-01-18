@@ -10,11 +10,15 @@ import pathlib
 import gradio as gr
 from sklearn.metrics import confusion_matrix
 
-with open('prompt/error_analysis_classification.prompt') as f:
-    error_analysis_prompt = f.read()
-with open('prompt/step_prompt_classification.prompt') as f:
+try:
+    with open(r'src\prompt\error_analysis_classification.prompt') as f:
+        error_analysis_prompt = f.read()
+except FileNotFoundError:
+    raise FileNotFoundError(r"The file 'src\prompt\error_analysis_classification.prompt' does not exist. Please ensure the file is present.")
+
+with open(r'src\prompt\step_prompt_classification.prompt') as f:
     step_prompt = f.read()
-with open('prompt/prompt_guide_short.prompt') as f:
+with open(r'src\prompt\prompt_guide_short.prompt') as f:
     prompt_guide_short = f.read()
 
 class CalibrationPrompt:

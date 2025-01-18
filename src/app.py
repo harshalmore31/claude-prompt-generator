@@ -24,6 +24,18 @@ calibration = CalibrationPrompt()
 # Load environment variables
 load_dotenv()
 language = os.getenv("LANGUAGE", "en")
+aws_region = os.getenv("AWS_REGION", "us-east-1")  # Add this line to specify a default region
+
+# Initialize components
+ape = APE()
+rewrite = GuideBased(region_name=aws_region)  # Pass the region to the GuideBased constructor
+alignment = Alignment()
+metaprompt = MetaPrompt()
+soeprompt = SOEPrompt()
+calibration = CalibrationPrompt()
+# Load environment variables
+load_dotenv()
+language = os.getenv("LANGUAGE", "en")
 
 # Load translations from JSON file
 with open('translations.json', 'r', encoding='utf-8') as f:
@@ -117,7 +129,7 @@ with gr.Blocks(title=lang_store[language]["Automatic Prompt Engineering"], theme
             lines=3,
             placeholder=lang_store[language]["Summarize the text delimited by triple quotes.\n\n\"\"\"{{insert text here}}\"\"\""],
         )
-        gr.Markdown("Use {\{xxx\}} to express custom variable, e.g. {\{document\}}")
+        gr.Markdown(r"Use {\{xxx\}} to express custom variable, e.g. {\{document\}}")
         with gr.Row():
             with gr.Column(scale=2):
                 level = gr.Radio(

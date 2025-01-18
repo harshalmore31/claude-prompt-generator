@@ -18,6 +18,9 @@ with open(prompt_guide_path, "r") as f:
     PromptGuide = f.read()
 
 region_name = os.getenv("REGION_NAME")
+if not region_name:
+    region_name = "us-west-2"  # Set a default region or manually set it for testing
+    # raise ValueError("REGION_NAME environment variable is not set")
 
 session = boto3.Session()
 retry_config = Config(
